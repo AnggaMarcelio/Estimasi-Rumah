@@ -12,9 +12,13 @@ jumlah kamar, luas bangunan, tahun dibangun, dll.
 # Load model dan scaler
 @st.cache_resource
 def load_model():
-    model = joblib.load('svr_house_price.pkl')
-    sc_X = joblib.load('feature_scaler.pkl')
-    sc_Y = joblib.load('target_scaler.pkl')
+    try:
+        model = joblib.load('svr_house_price.pkl')
+        sc_X = joblib.load('feature_scaler.pkl')
+        sc_Y = joblib.load('target_scaler.pkl')
+    except Exception as e:
+        st.error(f"❌ Gagal load model: {e}")
+        raise
     return model, sc_X, sc_Y
 
 model, sc_X, sc_Y = load_model()
